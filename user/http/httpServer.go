@@ -17,6 +17,8 @@ func NewHTTPServer(cancel context.CancelFunc, config config.AppConfig, us servic
 	r.HandleFunc("/users", createHandleListUsers(us)).Methods("GET")
 	r.HandleFunc("/users/{id}", createHandlerGetUser(us)).Methods("GET")
 	r.HandleFunc("/users", createHandlerCreateUser(us)).Methods("POST")
+	r.HandleFunc("/users/{id}", createHandlerUpdateUser(us)).Methods("PUT")
+	r.HandleFunc("/users/{id}", createHandlerDeleteUser(us)).Methods("DELETE")
 
 	addr := fmt.Sprintf("0.0.0.0:%d", config.ServerPort)
 	server := http.Server{
