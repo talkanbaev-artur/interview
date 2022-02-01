@@ -61,9 +61,17 @@ func (s service) UpdateUserAccount(ctx context.Context, userid int64, params Use
 		s.logger.Errorw("Unable to fetch user for update process", "error", err)
 		return err
 	}
-	user.Age = params.Age
-	user.FirstName = params.Firstname
-	user.LastName = params.Lastname
+
+	if params.Age != 0 {
+		user.Age = params.Age
+	}
+	if params.Firstname != "" {
+		user.FirstName = params.Firstname
+	}
+	if params.Lastname != "" {
+		user.LastName = params.Lastname
+	}
+
 	if err := model.Validateuser(user); err != nil {
 		s.logger.Errorw("New params for updated user failed validation", "params", params, "error", err)
 		return err
