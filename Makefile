@@ -16,3 +16,7 @@ mod_tidy:
 
 run_docker:
 	docker run --name talkanbaev-test -d $(IMAGE_NAME):$(VERSION)
+
+migrate:
+	$(shell chmod +x db/migrate.sh  && bash ./db/migrate.sh migrate)
+rollback: 
