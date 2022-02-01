@@ -27,9 +27,9 @@ func (r relUserRepository) List(ctx context.Context) ([]*model.User, error) {
 }
 
 func (r relUserRepository) GetByID(ctx context.Context, id int64) (*model.User, error) {
-	var u *model.User
-	err := r.r.Find(ctx, u, rel.Where(where.Eq("id", id)))
-	return u, err
+	var u model.User
+	err := r.r.Find(ctx, &u, rel.Where(where.Eq("id", id)))
+	return &u, err
 }
 
 func (r relUserRepository) Create(ctx context.Context, user *model.User) (*model.User, error) {

@@ -7,6 +7,8 @@ import (
 	"github.com/go-rel/rel"
 	"github.com/talkanbaev-artur/interview/config"
 	"github.com/talkanbaev-artur/shutdown"
+
+	_ "github.com/lib/pq"
 )
 
 func ConnectRelDatabase(conf config.AppConfig, shutdown *shutdown.Shutdown) (rel.Repository, error) {
