@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 
 	"github.com/talkanbaev-artur/interview/user/model"
 	"go.uber.org/zap"
@@ -21,7 +20,7 @@ type Service interface {
 
 	//mutations
 	RegisterUser(ctx context.Context, params UserChangeInput) (*model.User, error)
-	UpdateUserAccount(ctx context.Context, params UserChangeInput) error
+	UpdateUserAccount(ctx context.Context, userid int64, params UserChangeInput) error
 	SuspendUser(ctx context.Context, id int64) error
 }
 
@@ -35,21 +34,48 @@ func NewService(r Repository, logger *zap.SugaredLogger) Service {
 }
 
 func (s service) ListUser(ctx context.Context) ([]*model.User, error) {
-	return nil, errors.New("not implemented")
+	return s.repo.List(ctx)
 }
 
 func (s service) GetUserByID(ctx context.Context, id int64) (*model.User, error) {
-	return nil, errors.New("not implemented")
+	return s.repo.GetByID(ctx, id)
 }
 
 func (s service) RegisterUser(ctx context.Context, params UserChangeInput) (*model.User, error) {
-	return nil, errors.New("not implemented")
+	user, err := model.NewUser(params.Firstname, params.Lastname, params.Age)
+	if err != nil {
+		s.logger.Errorw("Invalid parameters were supplied to registration function", "params", params, "err", err)
+		return nil, err
+	}
+	user, err = s.repo.Create(ctx, user)
+	if err != nil {
+		s.logger.Errorw("Error during the repository call", "error", err)
+		return nil, err
+	}
+	return user, nil
 }
 
-func (s service) UpdateUserAccount(ctx context.Context, params UserChangeInput) error {
-	return errors.New("not implemented")
+func (s service) UpdateUserAccount(ctx context.Context, userid int64, params UserChangeInput) error {
+	user, err := s.repo.GetByID(ctx, userid)
+	if err != nil {
+		s.logger.Errorw("Unable to fetch user for update process", "error", err)
+		return err
+	}
+	user.Age = params.Age
+	user.FirstName = params.Firstname
+	user.LastName = params.Lastname
+	if err := model.Validateuser(user); err != nil {
+		s.logger.Errorw("New params for updated user failed validation", "params", params, "error", err)
+		return err
+	}
+	err = s.repo.Update(ctx, user)
+	if err != nil {
+		s.logger.Errorw("Unable to update user in the repo", "error", err)
+		return err
+	}
+	return nil
 }
 
 func (s service) SuspendUser(ctx context.Context, id int64) error {
-	return errors.New("not implemented")
+	return s.repo.Delete(ctx, id)
 }
