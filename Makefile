@@ -14,7 +14,7 @@ tag_latest:
 	docker image tag $(IMAGE_NAME):$(VERSION) $(IMAGE_NAME):latest
 
 mod_tidy:
-	go mod tidy
+	go mod tidy -go=1.16 && go mod tidy -go=1.17
 
 run_docker:
 	docker run --name talkanbaev-test -d $(IMAGE_NAME):$(VERSION)
