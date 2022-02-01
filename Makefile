@@ -3,7 +3,9 @@ VERSION = 0.1
 
 build: mod_tidy create_docker tag_latest
 
-run: build run_docker
+run_d: build run_docker
+run: 
+	go run main.go
 
 create_docker:
 	docker build --tag $(IMAGE_NAME):$(VERSION) .
