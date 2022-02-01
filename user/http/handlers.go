@@ -43,6 +43,10 @@ func createHandlerGetUser(us service.Service) http.HandlerFunc {
 		id, _ := strconv.ParseInt(params["id"], 10, 64)
 
 		users, err := us.GetUserByID(r.Context(), id)
+		if err == service.ErrUserNotFound {
+			rw.WriteHeader(204)
+			return
+		}
 		if err != nil {
 			answerErr(errorMsg{"error happended during fetch process", err.Error()}, rw, logr)
 			return

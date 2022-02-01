@@ -38,7 +38,11 @@ func (s service) ListUser(ctx context.Context) ([]*model.User, error) {
 }
 
 func (s service) GetUserByID(ctx context.Context, id int64) (*model.User, error) {
-	return s.repo.GetByID(ctx, id)
+	user, err := s.repo.GetByID(ctx, id)
+	if err.Error() == "Record not found" {
+		return nil, ErrUserNotFound
+	}
+	return user, nil
 }
 
 func (s service) RegisterUser(ctx context.Context, params UserChangeInput) (*model.User, error) {
