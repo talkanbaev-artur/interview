@@ -6,13 +6,13 @@ import (
 )
 
 type User struct {
-	ID        int64
-	FirstName string
-	LastName  string
-	Age       int
+	ID        int64  `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Age       int    `json:"age"`
 
-	CreatedAt time.Time //these fields would be managed automatically
-	UpdatedAt time.Time
+	CreatedAt time.Time `json:"created_at"` //these fields would be managed automatically
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 var (

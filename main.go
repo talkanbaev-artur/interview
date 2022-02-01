@@ -6,6 +6,7 @@ import (
 
 	"github.com/talkanbaev-artur/interview/config"
 	"github.com/talkanbaev-artur/interview/db"
+	"github.com/talkanbaev-artur/interview/user/http"
 	"github.com/talkanbaev-artur/interview/user/repo"
 	"github.com/talkanbaev-artur/interview/user/service"
 	"github.com/talkanbaev-artur/shutdown"
@@ -25,7 +26,9 @@ func main() {
 
 	//init user
 	userRepo := repo.NewRelRepo(relRepo)
-	_ = service.NewService(userRepo, logger.With("level", "service"))
+	us := service.NewService(userRepo, logger.With("level", "service"))
+
+	go http.NewHTTPServer(cancel, config, us)
 
 	logger.Infow("Initialised authentication server", "ConfigStatus", "OK", "ServiceStatus", "OK")
 	shutdown.Wait(ctx, cancel, shutd)
