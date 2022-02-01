@@ -38,7 +38,7 @@ func checkName(first, last string) error {
 }
 
 func checkAge(age int) error {
-	if age < 0 || age > 160 {
+	if age < 1 || age > 160 {
 		return ErrInvalidAge
 	}
 	return nil

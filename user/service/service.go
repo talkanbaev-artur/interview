@@ -62,15 +62,9 @@ func (s service) UpdateUserAccount(ctx context.Context, userid int64, params Use
 		return err
 	}
 
-	if params.Age != 0 {
-		user.Age = params.Age
-	}
-	if params.Firstname != "" {
-		user.FirstName = params.Firstname
-	}
-	if params.Lastname != "" {
-		user.LastName = params.Lastname
-	}
+	user.Age = params.Age
+	user.FirstName = params.Firstname
+	user.LastName = params.Lastname
 
 	if err := model.Validateuser(user); err != nil {
 		s.logger.Errorw("New params for updated user failed validation", "params", params, "error", err)
