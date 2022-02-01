@@ -1,12 +1,18 @@
 package model
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 type User struct {
 	ID        int64
 	FirstName string
 	LastName  string
 	Age       int
+
+	CreatedAt time.Time //these fields would be managed automatically
+	UpdatedAt time.Time
 }
 
 var (

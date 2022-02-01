@@ -2,8 +2,13 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/talkanbaev-artur/interview/user/model"
+)
+
+var (
+	ErrUserNotFound = errors.New("user with such id not found")
 )
 
 type Repository interface {
