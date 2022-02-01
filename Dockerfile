@@ -5,11 +5,11 @@ WORKDIR /app
 
 #get dependencies
 COPY go.mod ./
-RUN go mod download
+RUN go mod download && go mod tidy
 
 #copy and build the project
-COPY *.go ./
-RUN go build -o /main
+COPY . ./
+RUN go build -o /main main.go
 
 #Use deploy env
 FROM alpine:latest
