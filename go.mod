@@ -2,9 +2,22 @@ module github.com/talkanbaev-artur/interview
 
 go 1.17
 
-require go.uber.org/zap v1.20.0
+require (
+	github.com/go-rel/rel v0.30.0
+	go.uber.org/zap v1.20.0
+)
 
 require (
+	github.com/go-rel/sql v0.7.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/lib/pq v1.10.4 // indirect
+	github.com/serenize/snaker v0.0.0-20201027110005-a7ad2135616e // indirect
+	github.com/subosito/gotenv v1.2.0 // indirect
+)
+
+require (
+	github.com/go-rel/postgres v0.6.0
+	github.com/talkanbaev-artur/shutdown v0.0.0-20220131051657-6e9c006218ba
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 )
