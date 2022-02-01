@@ -22,3 +22,4 @@ run_docker:
 migrate:
 	$(shell chmod +x db/migrate.sh  && bash ./db/migrate.sh migrate)
 rollback: 
+	$(shell chmod +x db/migrate.sh  && bash ./db/migrate.sh rollback)
