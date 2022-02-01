@@ -13,5 +13,5 @@ type Repository interface {
 	//mutations
 	Create(ctx context.Context, user *model.User) (*model.User, error)
 	Update(ctx context.Context, user *model.User) error //dirty update
-	Delete(ctx context.Context, user *model.User) error
+	Delete(ctx context.Context, userid int64) error
 }
